@@ -1,37 +1,58 @@
-import { setEmail } from '../actions';
 import axios from 'axios';
 import React, { useState } from 'react';
-import { useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 
 interface LoginProps {}
 
+interface LoginData {
+  username: string;
+  password: string;
+}
+
 const LoginPage: React.FC<LoginProps> = () => {
-  const navigate = useNavigate(); // React Router hook for navigation
-  
+  const [errorMessage, setErrorMessage] = useState<string | null>(null);
+  const navigate = useNavigate();
   const [email, setTrainerEmail] = useState('');
   const [password, setPassword] = useState('');
 
-  interface LoginData {
-    email: string;
-    password: string;
-  }
-
   const loginPostData: LoginData = {
-    email: email,
-    password: password
-  }
+    username: email,
+    password: password,
+  };
 
   const handleLogin = async () => {
-    localStorage.setItem('userEmail', loginPostData.email);
+    if (!email || !password) {
+      setErrorMessage('Email and password are required.');
+      return;
+    }
+    localStorage.setItem('userEmail', loginPostData.username);
+
     try {
-      // Register a trainer by sending a POST request to /register-trainer
       const loginResponse = await axios.post('http://127.0.0.1:5000/login', loginPostData);
       console.log(loginResponse.data);
+      if (loginResponse.data===1) {
+        localStorage.setItem('user_type', 'client');
+        // Optionally, you can set other variables in local storage based on the response
+        
+        // Navigate to the dashboard page
+        navigate('/dashboard');
+      } else if(loginResponse.data===2){
+        localStorage.setItem('user_type', 'trainer');
+
+        // Handle unsuccessful login (e.g., invalid credentials)
+      }
       navigate('/dashboard');
-  } catch (error) {
+    } catch (error) {
+      if ((error as any).response && ((error as any).response).status === 401) {
+        // Set the error message for invalid credentials
+        setErrorMessage('Invalid credentials');
+        console.log('Invalid credentials');
+      } else {
+        // Set a generic error message for other errors
+        setErrorMessage('An error occurred. Please try again.');
+      }
       console.error('Error fetching data:', error);
-  }
+    }
   };
 
   const handleGoBack = () => {
@@ -42,6 +63,11 @@ const LoginPage: React.FC<LoginProps> = () => {
     <div className="min-h-screen flex items-center justify-center bg-gray-50">
       <div className="max-w-md w-full p-6 bg-white rounded-md shadow-md">
         <h2 className="text-2xl font-semibold mb-6">Login</h2>
+        {errorMessage && (
+          <div className="mb-4 text-red-500">
+            <p>{errorMessage}</p>
+          </div>
+        )}
         <div className="mb-4">
           <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="email">
             Email
