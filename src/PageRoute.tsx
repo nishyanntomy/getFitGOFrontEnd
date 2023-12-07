@@ -32,7 +32,7 @@ export const PageRoute = () => {
                 <Route path="/visualization" element={<Visualization/>} />
                 <Route path="/diets" element={<Diets/>} />
                 <Route path="/clients" element={<Clients/>} />
-                <Route path="/clients/:clientEmail" element={<TrainerClientDetails />} />
+                <Route path="/client/:clientEmail" element={<TrainerClientDetails />} />
                 <Route element={<NotFoundPage/>}/>
             </Routes>
         </Router>

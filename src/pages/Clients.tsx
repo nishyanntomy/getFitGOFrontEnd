@@ -21,13 +21,12 @@ const Clients = () => {
   useEffect(() => {
     const fetchClients = async () => {
       try {
-        const response = await axios.get<Client[]>('http://127.0.0.1:5000/view-trainer-clients');
+        const response = await axios.get<Client[]>(`http://127.0.0.1:5000/view-trainer-clients?trainerEmail=${localStorage.getItem('userEmail')}`);
         setClients(response.data);
       } catch (error) {
         console.error('Error fetching clients:', error);
       }
     };
-
     fetchClients();
   }, []);
 
