@@ -10,6 +10,8 @@ import ClientDetails from './pages/ClientDetails';
 import WorkoutHistory from './pages/WorkoutHistory';
 import PendingRequests from './pages/PendingRequests';
 import React from 'react';
+import Diets from './pages/Diets';
+
 
 export const PageRoute = () => {
     return (
@@ -24,6 +26,7 @@ export const PageRoute = () => {
                 <Route path="/client" element={<ClientDetails/>} />
                 <Route path="/workout-history" element={<WorkoutHistory/>} />
                 <Route path="/pending-client-requests" element={<PendingRequests/>} />
+                <Route path="/diets" element={<Diets/>} />
                 <Route element={<NotFoundPage/>}/>
             </Routes>
         </Router>
