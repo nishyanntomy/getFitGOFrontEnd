@@ -7,6 +7,7 @@ import Dashboard from './pages/Dashboard';
 import Routines from './pages/Routines';
 import ExercisePage from './pages/Visualization';
 import ClientDetails from './pages/ClientDetails';
+import WorkoutHistory from './pages/WorkoutHistory';
 
 export const PageRoute = () => {
     return (
@@ -19,6 +20,7 @@ export const PageRoute = () => {
                 <Route path="/routines" element={<Routines/>} />
                 <Route path="/top-exercise" element={<ExercisePage/>} />
                 <Route path="/client" element={<ClientDetails/>} />
+                <Route path="/workout-history" element={<WorkoutHistory/>} />
                 <Route element={<NotFoundPage/>}/>
             </Routes>
         </Router>
