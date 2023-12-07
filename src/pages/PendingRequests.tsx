@@ -26,13 +26,37 @@ const PendingRequests: React.FC = () => {
   }, []);
 
   const handleAcceptRequest = async (clientEmail: string) => {
-    // Implement the logic to accept the client request (make API call if needed)
-    console.log(`Accepted request from ${clientEmail}`);
+    try {
+      // Implement the logic to accept the client request (make API call if needed)
+      const response = await axios.post('http://127.0.0.1:5000/handle-pending-request', {
+        clientEmail: clientEmail,
+        trainerEmail: localStorage.getItem('userEmail'),
+        isAccepted: true
+      });
+
+      console.log(`Accepted request from ${clientEmail}`);
+      // After accepting, filter out the accepted request
+      setPendingRequests(prevRequests => prevRequests.filter(request => request.clientEmail !== clientEmail));
+    } catch (error) {
+      console.error("Error Accepting");
+    }
   };
 
   const handleRejectRequest = async (clientEmail: string) => {
-    // Implement the logic to reject the client request (make API call if needed)
-    console.log(`Rejected request from ${clientEmail}`);
+    try {
+      // Implement the logic to reject the client request (make API call if needed)
+      const response = await axios.post('http://127.0.0.1:5000/handle-pending-request', {
+        clientEmail: clientEmail,
+        trainerEmail: localStorage.getItem('userEmail'),
+        isAccepted: false
+      });
+
+      console.log(`Rejected request from ${clientEmail}`);
+      // After rejecting, filter out the rejected request
+      setPendingRequests(prevRequests => prevRequests.filter(request => request.clientEmail !== clientEmail));
+    } catch (error) {
+      console.error("Error Rejecting");
+    }
   };
 
   return (

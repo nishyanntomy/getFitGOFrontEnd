@@ -11,6 +11,7 @@ import WorkoutHistory from './pages/WorkoutHistory';
 import PendingRequests from './pages/PendingRequests';
 import React from 'react';
 import Diets from './pages/Diets';
+import Visualization from './pages/Visualization';
 
 
 export const PageRoute = () => {
@@ -26,7 +27,9 @@ export const PageRoute = () => {
                 <Route path="/profile" element={<ClientDetails/>} />
                 <Route path="/workout-history" element={<WorkoutHistory/>} />
                 <Route path="/pending-client-requests" element={<PendingRequests/>} />
-                <Route path="/diets" element={<Diets/>} />
+                <Route path="/visualization" element={<Visualization/>} />
+
+
                 <Route element={<NotFoundPage/>}/>
             </Routes>
         </Router>
