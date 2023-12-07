@@ -1,6 +1,7 @@
 import axios from "axios";
-import { Exercise } from "pages/Routines";
+import React from "react";
 import { useEffect, useState } from "react";
+import { Exercise } from "../Routines";
 
 const AddExerciseModal: React.FC<{
     onAddExercises: (selectedExercises: Exercise[]) => void;
@@ -70,13 +71,11 @@ const AddExerciseModal: React.FC<{
         setSelectedExercises([]);
     };
 
-    console.log("SELECTED: ", selectedExercises);
-
     const handleCheckboxChange = (exercise: Exercise) => {
-        const isChecked = selectedExercises.some((selectedExercise) => selectedExercise.name === exercise.name);
+        const isChecked = selectedExercises.some((selectedExercise) => selectedExercise.exercise_title === exercise.exercise_title);
 
         if (isChecked) {
-            setSelectedExercises((prevSelected) => prevSelected.filter((selected) => selected.name !== exercise.name));
+            setSelectedExercises((prevSelected) => prevSelected.filter((selected) => selected.exercise_title !== exercise.exercise_title));
         } else {
             setSelectedExercises((prevSelected) => [...prevSelected, exercise]);
         }
@@ -193,15 +192,15 @@ const AddExerciseModal: React.FC<{
                             </thead>
                             <tbody>
                                 {searchResults.map((exercise) => (
-                                    <tr key={exercise.name}>
-                                        <td>{exercise.name}</td>
+                                    <tr key={exercise.exercise_title}>
+                                        <td>{exercise.exercise_title}</td>
                                         <td>{exercise.body_part}</td>
                                         <td>{exercise.level}</td>
                                         <td>{exercise.equipment}</td>
                                         <td>
                                             <input
                                                 type="checkbox"
-                                                checked={selectedExercises.some((selected) => selected.name === exercise.name)}
+                                                checked={selectedExercises.some((selected) => selected.exercise_title === exercise.exercise_title)}
                                                 onChange={() => handleCheckboxChange(exercise)}
                                             />
                                         </td>
