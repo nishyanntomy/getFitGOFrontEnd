@@ -6,6 +6,7 @@ import Register from './pages/Register';
 import Dashboard from './pages/Dashboard';
 import Routines from './pages/Routines';
 import ExercisePage from './pages/Visualization';
+import ClientDetails from './pages/ClientDetails';
 
 export const PageRoute = () => {
     return (
@@ -17,7 +18,7 @@ export const PageRoute = () => {
                 <Route path="/dashboard" element={<Dashboard userType='trainer'/>} />
                 <Route path="/routines" element={<Routines/>} />
                 <Route path="/top-exercise" element={<ExercisePage/>} />
-
+                <Route path="/client" element={<ClientDetails/>} />
                 <Route element={<NotFoundPage/>}/>
             </Routes>
         </Router>
