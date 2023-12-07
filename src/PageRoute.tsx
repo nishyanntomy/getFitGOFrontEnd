@@ -8,6 +8,8 @@ import Routines from './pages/Routines';
 import ExercisePage from './pages/Visualization';
 import ClientDetails from './pages/ClientDetails';
 import WorkoutHistory from './pages/WorkoutHistory';
+import PendingRequests from './pages/PendingRequests';
+import React from 'react';
 
 export const PageRoute = () => {
     return (
@@ -16,11 +18,12 @@ export const PageRoute = () => {
                 <Route path="/" element={<Landing/>} />
                 <Route path="/login" element={<LoginPage/>} />
                 <Route path="/register" element={<Register/>} />
-                <Route path="/dashboard" element={<Dashboard userType='trainer'/>} />
+                <Route path="/dashboard" element={<Dashboard userType={localStorage.getItem('user_type')}/>} />
                 <Route path="/routines" element={<Routines/>} />
                 <Route path="/top-exercise" element={<ExercisePage/>} />
                 <Route path="/client" element={<ClientDetails/>} />
                 <Route path="/workout-history" element={<WorkoutHistory/>} />
+                <Route path="/pending-client-requests" element={<PendingRequests/>} />
                 <Route element={<NotFoundPage/>}/>
             </Routes>
         </Router>

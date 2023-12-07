@@ -31,14 +31,18 @@ const LoginPage: React.FC<LoginProps> = () => {
       const loginResponse = await axios.post('http://127.0.0.1:5000/login', loginPostData);
       console.log(loginResponse.data);
       if (loginResponse.data===1) {
-        localStorage.setItem('user_type', 'client');
+        const userType = 'client';
+
+        localStorage.setItem('user_type', userType);
         // Optionally, you can set other variables in local storage based on the response
         
         // Navigate to the dashboard page
         navigate('/dashboard');
       } else if(loginResponse.data===2){
-        localStorage.setItem('user_type', 'trainer');
+        const userType = 'trainer';
 
+        localStorage.setItem('user_type', userType);
+        
         // Handle unsuccessful login (e.g., invalid credentials)
       }
       navigate('/dashboard');
