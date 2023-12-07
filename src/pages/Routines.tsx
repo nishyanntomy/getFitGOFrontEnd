@@ -5,7 +5,7 @@ import AddExerciseModal from './routines/AddExerciseModal';
 import EditRepsModal from './routines/EditRepsModal';
 
 export interface Exercise {
-  exercise_title: string;
+  name: string;
   reps: number;
   body_part: string;
   level: string;
@@ -209,7 +209,7 @@ const Routines: React.FC = () => {
           <ul>
             {routine.exercises.map((exercise, index) => (
               <li key={index} className="mb-2">
-                {exercise.exercise_title} - {exercise.reps} reps
+                {exercise.name} - {exercise.reps} reps
                 <button
                   className="bg-yellow-500 hover:bg-yellow-700 text-white font-bold py-2 px-4 rounded ml-4"
                   onClick={() => handleEditRepsClick(routine.routine_id, exercise.exercise_id)}

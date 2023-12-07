@@ -72,10 +72,10 @@ const AddExerciseModal: React.FC<{
     };
 
     const handleCheckboxChange = (exercise: Exercise) => {
-        const isChecked = selectedExercises.some((selectedExercise) => selectedExercise.exercise_title === exercise.exercise_title);
+        const isChecked = selectedExercises.some((selectedExercise) => selectedExercise.name === exercise.name);
 
         if (isChecked) {
-            setSelectedExercises((prevSelected) => prevSelected.filter((selected) => selected.exercise_title !== exercise.exercise_title));
+            setSelectedExercises((prevSelected) => prevSelected.filter((selected) => selected.name !== exercise.name));
         } else {
             setSelectedExercises((prevSelected) => [...prevSelected, exercise]);
         }
@@ -192,15 +192,15 @@ const AddExerciseModal: React.FC<{
                             </thead>
                             <tbody>
                                 {searchResults.map((exercise) => (
-                                    <tr key={exercise.exercise_title}>
-                                        <td>{exercise.exercise_title}</td>
+                                    <tr key={exercise.name}>
+                                        <td>{exercise.name}</td>
                                         <td>{exercise.body_part}</td>
                                         <td>{exercise.level}</td>
                                         <td>{exercise.equipment}</td>
                                         <td>
                                             <input
                                                 type="checkbox"
-                                                checked={selectedExercises.some((selected) => selected.exercise_title === exercise.exercise_title)}
+                                                checked={selectedExercises.some((selected) => selected.name === exercise.name)}
                                                 onChange={() => handleCheckboxChange(exercise)}
                                             />
                                         </td>
