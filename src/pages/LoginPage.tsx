@@ -1,17 +1,37 @@
+import { setEmail } from '../actions';
+import axios from 'axios';
 import React, { useState } from 'react';
+import { useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 
 interface LoginProps {}
 
 const LoginPage: React.FC<LoginProps> = () => {
   const navigate = useNavigate(); // React Router hook for navigation
-
-  const [email, setEmail] = useState('');
+  
+  const [email, setTrainerEmail] = useState('');
   const [password, setPassword] = useState('');
 
-  const handleLogin = () => {
-    // Add your login logic here
-    console.log('Logging in with:', email, password);
+  interface LoginData {
+    email: string;
+    password: string;
+  }
+
+  const loginPostData: LoginData = {
+    email: email,
+    password: password
+  }
+
+  const handleLogin = async () => {
+    localStorage.setItem('userEmail', loginPostData.email);
+    try {
+      // Register a trainer by sending a POST request to /register-trainer
+      const loginResponse = await axios.post('http://127.0.0.1:5000/login', loginPostData);
+      console.log(loginResponse.data);
+      navigate('/dashboard');
+  } catch (error) {
+      console.error('Error fetching data:', error);
+  }
   };
 
   const handleGoBack = () => {
@@ -32,7 +52,7 @@ const LoginPage: React.FC<LoginProps> = () => {
             className="w-full p-2 border border-gray-300 rounded-md"
             placeholder="Enter your email"
             value={email}
-            onChange={(e) => setEmail(e.target.value)}
+            onChange={(e) => setTrainerEmail(e.target.value)}
           />
         </div>
         <div className="mb-4">
