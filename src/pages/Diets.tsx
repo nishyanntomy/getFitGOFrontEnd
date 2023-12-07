@@ -4,7 +4,7 @@ import axios from 'axios';
 import DietCard from './diets/DietCard';
 import AddDietModal from './diets/AddEditDietModal';
 
-interface Diet {
+export interface Diet {
     dietId: number;
     dietName: string;
     breakfast: string;

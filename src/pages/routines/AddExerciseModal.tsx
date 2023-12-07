@@ -1,7 +1,7 @@
 import axios from "axios";
 import React from "react";
 import { useEffect, useState } from "react";
-import { Exercise } from "../Routines";
+import { Exercise, RoutineExercise } from "../Routines";
 
 const AddExerciseModal: React.FC<{
     onAddExercises: (selectedExercises: Exercise[]) => void;
