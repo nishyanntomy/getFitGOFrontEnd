@@ -1,315 +1,150 @@
-// WorkoutPage.tsx
-
 import axios from 'axios';
 import React, { useState, useEffect } from 'react';
+import AddRoutineModal from './routines/AddRoutineModal';
+import AddExerciseModal from './routines/AddExerciseModal';
 
-interface Exercise {
+export interface Exercise {
   name: string;
   reps: number;
-  bodyType: string;
+  body_part: string;
   level: string;
   equipment: string;
+  id: number
 }
 
 interface Routine {
-  id: number;
-  name: string;
-  description: string;
+  routine_id: number;
+  routine_name: string;
+  routine_description: string;
   exercises: Exercise[];
 }
 
-const AddRoutineModal: React.FC<{ onSave: (name: string) => void; onCancel: () => void }> = ({
-    onSave,
-    onCancel,
-  }) => {
-    const [routineName, setRoutineName] = useState('');
-  
-    const handleSave = () => {
-      onSave(routineName);
-      setRoutineName('');
-    };
-  
-    return (
-      <div className="fixed top-0 left-0 w-full h-full flex items-center justify-center bg-black bg-opacity-50">
-        <div className="bg-white p-8 rounded">
-          <h2 className="text-xl font-bold mb-4">Add New Routine</h2>
-          <input
-            type="text"
-            placeholder="Routine Name"
-            value={routineName}
-            onChange={(e) => setRoutineName(e.target.value)}
-            className="mb-4 p-2 border rounded w-full"
-          />
-          <div className="flex justify-end">
-            <button
-              className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded mr-4"
-              onClick={handleSave}
-            >
-              Save
-            </button>
-            <button
-              className="bg-gray-300 hover:bg-gray-400 text-gray-700 font-bold py-2 px-4 rounded"
-              onClick={onCancel}
-            >
-              Cancel
-            </button>
-          </div>
-        </div>
-      </div>
-    );
-  };
 
-const AddExerciseModal: React.FC<{
-  onAddExercises: (selectedExercises: Exercise[]) => void;
-  onCancel: () => void;
-}> = ({ onAddExercises, onCancel }) => {
-  const [filters, setFilters] = useState({
-    bodyType: '',
-    level: '',
-    equipment: '',
-    searchQuery: '',
-  });
-  const [searchResults, setSearchResults] = useState<Exercise[]>([]);
-  const [selectedExercises, setSelectedExercises] = useState<Exercise[]>([]);
+const Routines: React.FC = () => {
+  interface Data {
+    message: string;
+  }
 
-  // Mock API call to fetch exercises based on filters
-  const fetchExercisesFromApi = async (): Promise<Exercise[]> => {
-    // Assume the API call returns an array of exercises based on filters
-    return [
-      { name: 'Exercise 1', reps: 10, bodyType: 'Upper Body', level: 'Beginner', equipment: 'Dumbbells' },
-      { name: 'Exercise 2', reps: 15, bodyType: 'Lower Body', level: 'Intermediate', equipment: 'Resistance Bands' },
-      // Add more exercises as needed
-    ];
-  };
+  const [trainerEmail, setTrainerEmail] = useState('');
 
-  const handleSearch = async () => {
-    const results = await fetchExercisesFromApi();
-    setSearchResults(results);
-  };
-
-  const handleAddSelectedExercises = () => {
-    onAddExercises(selectedExercises);
-    setSelectedExercises([]);
-  };
-
-  const handleCheckboxChange = (exercise: Exercise) => {
-    const isChecked = selectedExercises.some((selectedExercise) => selectedExercise.name === exercise.name);
-
-    if (isChecked) {
-      setSelectedExercises((prevSelected) => prevSelected.filter((selected) => selected.name !== exercise.name));
-    } else {
-      setSelectedExercises((prevSelected) => [...prevSelected, exercise]);
+  useEffect(() => {
+    const storedData = localStorage.getItem('userEmail');
+    if (storedData) {
+      setTrainerEmail(storedData);
     }
-  };
+  }, []);
 
-  return (
-    <div className="fixed top-0 left-0 w-full h-full flex items-center justify-center bg-black bg-opacity-50">
-      <div className="bg-white p-8 rounded w-96">
-        <h2 className="text-xl font-bold mb-4">Add Exercises</h2>
-        <div className="mb-4">
-          <label className="block text-sm font-semibold mb-2">Body Type:</label>
-          {/* Add your Body Type dropdown here */}
-        </div>
-        <div className="mb-4">
-          <label className="block text-sm font-semibold mb-2">Exercise Level:</label>
-          {/* Add your Exercise Level dropdown here */}
-        </div>
-        <div className="mb-4">
-          <label className="block text-sm font-semibold mb-2">Equipment:</label>
-          {/* Add your Equipment dropdown here */}
-        </div>
-        <div className="mb-4">
-          <label className="block text-sm font-semibold mb-2">Search by Name:</label>
-          <input
-            type="text"
-            placeholder="Search"
-            value={filters.searchQuery}
-            onChange={(e) => setFilters({ ...filters, searchQuery: e.target.value })}
-            className="p-2 border rounded w-full"
-          />
-        </div>
-        <button
-          className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded mb-4"
-          onClick={handleSearch}
-        >
-          Search
-        </button>
-        <table className="w-full">
-          <thead>
-            <tr>
-              <th>Exercise Name</th>
-              <th>Body Type</th>
-              <th>Level</th>
-              <th>Equipment</th>
-              <th>Add</th>
-            </tr>
-          </thead>
-          <tbody>
-            {searchResults.map((exercise) => (
-              <tr key={exercise.name}>
-                <td>{exercise.name}</td>
-                <td>{exercise.bodyType}</td>
-                <td>{exercise.level}</td>
-                <td>{exercise.equipment}</td>
-                <td>
-                  <input
-                    type="checkbox"
-                    checked={selectedExercises.some((selected) => selected.name === exercise.name)}
-                    onChange={() => handleCheckboxChange(exercise)}
-                  />
-                </td>
-              </tr>
-            ))}
-          </tbody>
-        </table>
-        <div className="flex justify-end">
-          <button
-            className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded mr-4"
-            onClick={handleAddSelectedExercises}
-          >
-            Add Selected
-          </button>
-          <button
-            className="bg-gray-300 hover:bg-gray-400 text-gray-700 font-bold py-2 px-4 rounded"
-            onClick={onCancel}
-          >
-            Cancel
-          </button>
-        </div>
-      </div>
-    </div>
-  );
-};
-
-const WorkoutPage: React.FC = () => {
-    interface Data {
-        message: string;
-    }
   const [routines, setRoutines] = useState<Routine[]>([]);
   const [newRoutine, setNewRoutine] = useState<Routine>({
-    id: 0,
-    name: '',
-    description: '',
-    exercises: [],
+    routine_id: 0,
+  routine_name: '',
+  routine_description: '',
+  exercises: []
   });
-  const [isAddingRoutine, setIsAddingRoutine] = useState(false);
-  const [isAddingExercise, setIsAddingExercise] = useState(false);
+  const [showAddRoutineModal, setShowAddRoutineModal] = useState(false);
+  const [showAddExerciseModal, setShowAddExerciseModal] = useState(false);
 
-  const fetchExercisesFromApi = async (): Promise<Exercise[]> => {
-    // Assume the API call returns an array of exercises based on filters
-    return [
-      { name: 'Exercise 1', reps: 10, bodyType: 'Upper Body', level: 'Beginner', equipment: 'Dumbbells' },
-      { name: 'Exercise 2', reps: 15, bodyType: 'Lower Body', level: 'Intermediate', equipment: 'Resistance Bands' },
-      // Add more exercises as needed
-    ];
-  };
 
   useEffect(() => {
     const fetchData = async () => {
-        try {
-            const response = await axios.get<Data>('http://127.0.0.1:5000/diet');
-            console.log(response.data);
-
-        } catch (error) {
-            console.error('Error fetching data:', error);
-        }
+      try {
+        const response = await axios.get<Routine[]>(`http://127.0.0.1:5000/routine?trainerEmail=${localStorage.getItem('userEmail')}`);
+        setRoutines(response.data)
+        console.log(response.data);
+      } catch (error) {
+        console.error('Error fetching data:', error);
+      }
     };
 
     fetchData();
-}, []);
-  
-  useEffect(() => {
-    const fetchExercises = async () => {
-        try {
-            const response = await axios.get<Data>('http://localhost:5000/api/diet');
-            console.log(response.data);
-        } catch (error) {
-            console.error('Error fetching data:', error);
-        }
-      // Assume the API call returns an array of exercises
-      const exercises = await fetchExercisesFromApi();
-      setNewRoutine((prevRoutine) => ({ ...prevRoutine, exercises }));
-    };
-
-    if (isAddingExercise) {
-      fetchExercises();
-    }
-  }, [isAddingExercise]);
+  }, []);
 
   const handleAddRoutineClick = () => {
-    setIsAddingRoutine(true);
+    setShowAddRoutineModal(true);
   };
 
-  const handleSaveRoutine = (name: string) => {
-    setRoutines((prevRoutines) => [...prevRoutines, { ...newRoutine, name, id: Date.now() }]);
-    setNewRoutine({
-      id: 0,
-      name: '',
-      description: '',
-      exercises: [],
-    });
-    setIsAddingRoutine(false);
+  const handleSaveRoutine = async (name: string, description: string) => {
+    try {
+      // Make the POST request to add the routine
+      const addRoutineResponse = await axios.post('http://127.0.0.1:5000/routine', {
+        routineName: name,
+        routineDescription: description,
+        trainerEmail: trainerEmail
+      });
+
+      console.log(addRoutineResponse.data);
+
+      // Update state with the new routine
+      setRoutines((prevRoutines) => [
+        ...prevRoutines,
+        { ...newRoutine, name, description, id: Date.now(), exercises: [] },
+      ]);
+
+      setShowAddRoutineModal(false);
+    } catch (error) {
+      console.error('Error adding routine:', error);
+    }
   };
 
   const handleCancelAddRoutine = () => {
-    setIsAddingRoutine(false);
+    setShowAddRoutineModal(false);
   };
 
-  const deleteRoutine = (id: number) => {
-    setRoutines((prevRoutines) => prevRoutines.filter((routine) => routine.id !== id));
+  const deleteRoutine = async (id: number) => {
+    try {
+      const response = await axios.delete<Routine[]>(`http://127.0.0.1:5000/routine?routineId=${id}`);
+      console.log(response.data);
+    } catch (error) {
+      console.error('Error deleting data:', error);
+    }
+    setRoutines((prevRoutines) => prevRoutines.filter((routine) => routine.routine_id !== id));
   };
 
   const handleAddExerciseClick = () => {
-    setIsAddingExercise(true);
+    setShowAddExerciseModal(true);
   };
 
   const handleCancelAddExercise = () => {
-    setIsAddingExercise(false);
+    setShowAddExerciseModal(false);
   };
 
-  const handleAddExercisesToRoutine = (selectedExercises: Exercise[]) => {
-    setNewRoutine((prevRoutine) => ({
-      ...prevRoutine,
-      exercises: [...prevRoutine.exercises, ...selectedExercises],
-    }));
-    setIsAddingExercise(false);
+  const handleAddExercisesToRoutine = async (selectedExercises: Exercise[]) => {
+    const selectedIds = selectedExercises.map((item) => item.id);
+    try {
+      // Make the POST request to add the routine
+      const addRoutineToExerciseResponse = await axios.post('http://127.0.0.1:5000/routine-exercise', {
+        exercises: selectedIds,
+        routineId: 2
+      });
+
+      console.log(addRoutineToExerciseResponse.data);
+
+      setNewRoutine((prevRoutine) => ({
+        ...prevRoutine,
+        exercises: [...prevRoutine.exercises, ...selectedExercises],
+      }));
+
+      setShowAddRoutineModal(false);
+    } catch (error) {
+      console.error('Error adding exercises to routine:', error);
+    }
+    
+    setShowAddExerciseModal(false);
   };
 
   return (
     <div className="container mx-auto p-8">
-      <h1 className="text-3xl font-bold mb-8">Gym Trainer Workouts</h1>
+      <h1 className="text-3xl font-bold mb-8">Routines</h1>
       <button
         className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded mb-4"
         onClick={handleAddRoutineClick}
       >
         Add New Routine
       </button>
-      {isAddingRoutine && (
+      {showAddRoutineModal && (
         <AddRoutineModal onSave={handleSaveRoutine} onCancel={handleCancelAddRoutine} />
       )}
-      {routines.map((routine) => (
-        <div
-          key={routine.id}
-          className="border-2 border-gray-300 p-4 rounded mb-4"
-        >
-          <h3 className="text-xl font-bold mb-2">{routine.name}</h3>
-          <p className="mb-4">{routine.description}</p>
-          <ul>
-            {routine.exercises.map((exercise, index) => (
-              <li key={index} className="mb-2">
-                {exercise.name} - {exercise.reps} reps
-              </li>
-            ))}
-          </ul>
-          <button
-            className="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded mt-4"
-            onClick={() => deleteRoutine(routine.id)}
-          >
-            Delete Routine
-          </button>
-        </div>
-      ))}
-      {isAddingExercise && (
+      {showAddExerciseModal && (
         <AddExerciseModal
           onAddExercises={handleAddExercisesToRoutine}
           onCancel={handleCancelAddExercise}
@@ -317,11 +152,11 @@ const WorkoutPage: React.FC = () => {
       )}
       {routines.map((routine) => (
         <div
-          key={routine.id}
+          key={routine.routine_id}
           className="border-2 border-gray-300 p-4 rounded mb-4"
         >
-           <h3 className="text-xl font-bold mb-2">{routine.name}</h3>
-          <p className="mb-4">{routine.description}</p>
+          <h3 className="text-xl font-bold mb-2">{routine.routine_name}</h3>
+          <p className="mb-4">{routine.routine_description}</p>
           <ul>
             {routine.exercises.map((exercise, index) => (
               <li key={index} className="mb-2">
@@ -331,7 +166,7 @@ const WorkoutPage: React.FC = () => {
           </ul>
           <button
             className="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded mt-4"
-            onClick={() => deleteRoutine(routine.id)}
+            onClick={() => deleteRoutine(routine.routine_id)}
           >
             Delete Routine
           </button>
@@ -347,4 +182,4 @@ const WorkoutPage: React.FC = () => {
   );
 };
 
-export default WorkoutPage;
+export default Routines;

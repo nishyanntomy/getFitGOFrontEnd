@@ -1,9 +1,17 @@
+import axios from 'axios';
 import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
+import { useDispatch } from 'react-redux';
+import { setEmail } from '../actions';
 
 interface TrainerRegisterProps {}
 
 const TrainerRegister: React.FC<TrainerRegisterProps> = () => {
+  const navigate = useNavigate();
+  const dispatch = useDispatch();
+
   const [trainerData, setTrainerData] = useState({
+    username: '',
     email: '',
     password: '',
     firstName: '',
@@ -13,14 +21,48 @@ const TrainerRegister: React.FC<TrainerRegisterProps> = () => {
       city: '',
       state: '',
     },
-    mobileNumber: ''
+    mobileNumber: '',
+    aboutMe: ''
   });
 
   const [showPassword, setShowPassword] = useState(false);
 
-  const handleTrainerRegister = () => {
-    // Add trainer registration logic
-    console.log('Trainer Registration:', trainerData);
+  interface TrainerRegistrationData {
+    username: string;
+    password: string;
+    email: string;
+    firstName: string;
+    lastName: string;
+    gender: string;
+    state: string;
+    city: string;
+    mobileNumber: string;
+    aboutMe: string;
+}
+
+const trainerPostData: TrainerRegistrationData = {
+  username: trainerData.username,
+  password: trainerData.password,
+  email: trainerData.email,
+  firstName: trainerData.firstName,
+  lastName: trainerData.lastName,
+  gender: trainerData.gender,
+  state: trainerData.address.state,
+  city: trainerData.address.city,
+  mobileNumber: trainerData.mobileNumber,
+  aboutMe: trainerData.aboutMe
+};
+
+
+  const handleTrainerRegister = async () => {
+    try {
+      // Register a trainer by sending a POST request to /register-trainer
+      const registerTrainerResponse = await axios.post('http://127.0.0.1:5000/register-trainer', trainerPostData);
+      console.log(registerTrainerResponse.data);
+      navigate('/login');
+  } catch (error) {
+      console.error('Error fetching data:', error);
+  }
   };
 
   return (
@@ -105,6 +147,19 @@ const TrainerRegister: React.FC<TrainerRegisterProps> = () => {
         />
       </div>
       <div className="mb-4">
+        <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="trainerAbout">
+          About Me
+        </label>
+        <input
+          type="text"
+          id="trainerAbout"
+          className="w-full p-2 border border-gray-300 rounded-md"
+          placeholder="Tell us about yourself"
+          value={trainerData.aboutMe}
+          onChange={(e) => setTrainerData({ ...trainerData, aboutMe: e.target.value })}
+        />
+      </div>
+      <div className="mb-4">
         <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="clientMobileNumber">
           Mobile Number
         </label>
@@ -128,6 +183,19 @@ const TrainerRegister: React.FC<TrainerRegisterProps> = () => {
           placeholder="Enter your email"
           value={trainerData.email}
           onChange={(e) => setTrainerData({ ...trainerData, email: e.target.value })}
+        />
+      </div>
+      <div className="mb-4">
+        <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="trainerUsername">
+          Username
+        </label>
+        <input
+          type="text"
+          id="trainerUsername"
+          className="w-full p-2 border border-gray-300 rounded-md"
+          placeholder="Enter your username"
+          value={trainerData.username}
+          onChange={(e) => setTrainerData({ ...trainerData, username: e.target.value })}
         />
       </div>
       <div className="mb-4">
