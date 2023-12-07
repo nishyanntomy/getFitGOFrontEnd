@@ -1,3 +1,4 @@
+import React from "react";
 import { useState } from "react";
 
 // Components for each menu item
