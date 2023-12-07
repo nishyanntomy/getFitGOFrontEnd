@@ -70,7 +70,7 @@ const DietPage: React.FC = () => {
     const handleSaveDiet = async (newDiet: { dietType: string; breakfast: string; lunch: string; dinner: string; instruction: string }) => {
         try {
             // Make the POST request to add the diet
-            const addDietResponse = await axios.post('http://127.0.0.1:5000/routine', {
+            const addDietResponse = await axios.post('http://127.0.0.1:5000/diet', {
                 dietType: newDiet.dietType,
                 trainerEmail: trainerEmail,
                 breakfast: newDiet.breakfast,
