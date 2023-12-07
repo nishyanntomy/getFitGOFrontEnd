@@ -46,10 +46,8 @@ interface ExerciseData {
 const ExercisePage = () => {
   const [exerciseData, setExerciseData] = useState<Exercise[]>([]);
   const [bodyPartData, setBodyPartData] = useState<BodyPart[]>([]);
-  const [lineChartData, setLineChartData] = useState<ExerciseData[]>([]);
   const [loadingExercise, setLoadingExercise] = useState(true);
   const [loadingBodyPart, setLoadingBodyPart] = useState(true);
-  const [loadingLineChart, setLoadingLineChart] = useState(true);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -83,21 +81,7 @@ const ExercisePage = () => {
     fetchData();
   }, []);
 
-  useEffect(() => {
-    const fetchLineChartData = async () => {
-      try {
-        const response = await fetch('http://127.0.0.1:5000/line-chart-data');
-        const data = await response.json();
-        setLineChartData(data);
-      } catch (error) {
-        console.error('Error fetching line chart data', error);
-      } finally {
-        setLoadingLineChart(false);
-      }
-    };
-
-    fetchLineChartData();
-  }, []);
+  
 
   const chartData = {
     labels: exerciseData.map((exercise) => exercise.exercise_name),
@@ -141,31 +125,18 @@ const ExercisePage = () => {
     ],
   };
 
-  const lineChartDataOptions = {
-    labels: lineChartData.map((data) => data.date),
-    datasets: [
-      {
-        label: 'Number of Exercises',
-        data: lineChartData.map((data) => data.exercise_count),
-        fill: false,
-        borderColor: 'rgba(75,192,192,1)',
-        borderWidth: 2,
-        pointBackgroundColor: 'rgba(75,192,192,1)',
-      },
-    ],
-  };
 
   return (
     <div style={{ textAlign: 'center', padding: '20px', backgroundColor: '#f7f7f7' }}>
       <h1 style={{ color: '#333', marginBottom: '20px', fontSize: '2em' }}>Top Exercises</h1>
-      {loadingExercise || loadingBodyPart || loadingLineChart ? (
+      {loadingExercise || loadingBodyPart? (
         <p style={{ fontSize: '18px', color: '#777' }}>Loading exercise data...</p>
       ) : (
         <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', width: '80%', margin: 'auto', boxShadow: '0 0 10px rgba(0, 0, 0, 0.1)', borderRadius: '8px', overflow: 'hidden', backgroundColor: '#fff' }}>
-          <div style={{ width: '50%' }}>
+          <div style={{ width: '80%' }}>
             <Bar data={chartData} />
           </div>
-          <div style={{ padding: '20px', width: '50%' }}>
+          <div style={{ padding: '20px', width: '60%' }}>
             <Doughnut data={chartData2} />
           </div>
                   </div>

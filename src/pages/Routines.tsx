@@ -200,11 +200,11 @@ const Routines: React.FC = () => {
   
 
 
-   return (
+  return (
     <div className="container mx-auto p-8">
       <h1 className="text-3xl font-bold mb-8">Your Routines</h1>
       <button
-        className="flex items-center bg-gray-400 hover:bg-gray-600 text-white font-bold py-2 px-4 rounded mb-4"
+        className="flex items-center bg-gray-400 hover:bg-gray-600 text-white font-bold py-2 px-4 rounded-md mb-4"
         onClick={handleAddRoutineClick}
       >
         <FaPlus className="mr-2" />
@@ -216,20 +216,16 @@ const Routines: React.FC = () => {
       {showAddExerciseModal && (
         <AddExerciseModal
           onAddExercises={handleAddExercisesToRoutine}
-
           onCancel={handleCancelAddExercise}
         />
       )}
       {showEditRepsModal && (
-        <EditRepsModal
-          onCancel={handleCancelEditReps}
-          onSave={handleSaveReps}
-        />
+        <EditRepsModal onCancel={handleCancelEditReps} onSave={handleSaveReps} />
       )}
       {routines.map((routine) => (
         <div
           key={routine.routine_id}
-          className="border-2 border-gray-300 p-4 rounded mb-4 shadow-md"
+          className="border-2 border-gray-300 p-4 rounded-md mb-4 shadow-md"
         >
           <h3 className="text-xl font-bold mb-2">{routine.routine_name}</h3>
           <p className="text-gray-600 mb-4">{routine.routine_description}</p>
@@ -239,7 +235,7 @@ const Routines: React.FC = () => {
                 <FaDumbbell className="mr-2" />
                 {exercise.exercise_title} - {exercise.reps} reps
                 <button
-                  className="bg-yellow-500 hover:bg-yellow-700 text-white font-bold py-2 px-4 rounded ml-4"
+                  className="bg-yellow-500 hover:bg-yellow-700 text-white font-bold py-2 px-4 rounded-md ml-auto"
                   onClick={() => handleEditRepsClick(routine.routine_id, exercise.exercise_id)}
                 >
                   <FaPencilAlt className="mr-1" />
@@ -248,24 +244,28 @@ const Routines: React.FC = () => {
               </li>
             ))}
           </ul>
-          <button
-            className="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded mt-4 flex items-center"
-            onClick={() => deleteRoutine(routine.routine_id)}
-          >
-            <FaTrash className="mr-2" />
-            Delete Routine
-          </button>
-          <button
-            className="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded mt-2 flex items-center"
-            onClick={() => handleAddExerciseClick(routine.routine_id)}
-          >
-            <FaPlus className="mr-2" />
-            Add Exercise
-          </button>
+          <div className="flex mt-4">
+            <button
+              className="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded-md mr-2"
+              onClick={() => handleAddExerciseClick(routine.routine_id)}
+            >
+              <FaPlus className="mr-2" />
+              Add Exercise
+            </button>
+            <button
+              className="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded-md"
+              onClick={() => deleteRoutine(routine.routine_id)}
+            >
+              <FaTrash className="mr-2" />
+              Delete Routine
+            </button>
+          </div>
         </div>
       ))}
     </div>
   );
-};
+  
+  
+            };  
 
 export default Routines;
