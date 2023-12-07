@@ -9,6 +9,7 @@ const Routines: React.FC = () => <div>Routines Page</div>;
 const Clients: React.FC = () => <div>Clients Page</div>;
 const PendingRequests: React.FC = () => <div>Pending Client Requests Page</div>;
 const Diets: React.FC = () => <div>Diets Page</div>;
+const Visualization: React.FC = () => <div>Visualization</div>;
 
 const ClientDashboard: React.FC = () => {
   const navigate = useNavigate();
@@ -19,6 +20,9 @@ const ClientDashboard: React.FC = () => {
     { label: 'Request Trainer', image: 'https://www.personaltraineredu.org/wp-content/uploads/2022/11/personal-trainer.jpg' },
     { label: 'Workout History', image: 'https://fitbod.me/wp-content/uploads/2023/03/blog_hero.png' },
     { label: 'View Diets', image: 'https://blog.nasm.org/hubfs/popular-diets-4.jpg' },
+    { label: 'visualization', image: 'https://dims.apnews.com/dims4/default/2ac7860/2147483647/strip/true/crop/3000x2000+0+0/resize/1440x960!/format/webp/quality/90/?url=https%3A%2F%2Fstorage.googleapis.com%2Fafs-prod%2Fmedia%2F680d9972e1564f92a2c2b3cffdef3b24%2F3000.jpeg' },
+
+
   ];
 
   const [selectedMenuItem, setSelectedMenuItem] = useState(menuItems[0]);
@@ -66,6 +70,8 @@ const ClientDashboard: React.FC = () => {
         {selectedMenuItem.label === 'Request Trainer' && <PendingRequests />}
         {selectedMenuItem.label === 'View Diets' && <Diets />}
         {selectedMenuItem.label === 'Workout History' && <WorkoutHistory />}
+        {selectedMenuItem.label === 'Trends' && <Visualization />}
+
       </div>
     </div>
   );

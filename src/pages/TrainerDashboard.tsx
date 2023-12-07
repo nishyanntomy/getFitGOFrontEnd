@@ -16,7 +16,8 @@ const TrainerDashboard: React.FC = () => {
     { label: 'Routines', image: 'https://hips.hearstapps.com/hmg-prod/images/hardcore-exercises-royalty-free-image-1637943272.jpg?crop=1.00xw:0.737xh;0,0.186xh&resize=1200:*' },
     { label: 'Clients', image: 'https://kimandkalee.com/wp-content/uploads/2020/01/at-home-LES-MILLS-on-Demand-BODYSTEP-workouts-min.jpg' },
     { label: 'Pending Client Requests', image: 'https://www.personaltraineredu.org/wp-content/uploads/2022/11/personal-trainer.jpg' },
-   { label: 'Diets', image: 'https://blog.nasm.org/hubfs/popular-diets-4.jpg' }
+   { label: 'Diets', image: 'https://blog.nasm.org/hubfs/popular-diets-4.jpg'},
+   { label: 'visualization', image: 'https://dims.apnews.com/dims4/default/2ac7860/2147483647/strip/true/crop/3000x2000+0+0/resize/1440x960!/format/webp/quality/90/?url=https%3A%2F%2Fstorage.googleapis.com%2Fafs-prod%2Fmedia%2F680d9972e1564f92a2c2b3cffdef3b24%2F3000.jpeg' }
   ];
   const [selectedMenuItem, setSelectedMenuItem] = useState('');
 
