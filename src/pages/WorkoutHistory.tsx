@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
-import { FaHistory, FaTimes } from 'react-icons/fa'; // Import icons from react-icons library
+import { FaTimes } from 'react-icons/fa'; // Import icons from react-icons library
 import workoutHistoryIcon from '../assets/icons/workoutHistory.png'
 interface Workout {
     id: number;
