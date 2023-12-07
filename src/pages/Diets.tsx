@@ -40,15 +40,22 @@ const DietPage: React.FC = () => {
         fetchDiets();
     }, []);
 
+
     const deleteDiet = async (id: number) => {
         try {
-          const response = await axios.delete<Diet[]>(`http://127.0.0.1:5000/diet?dietId=${id}`);
+          const response = await axios.delete(`http://127.0.0.1:5000/diet`, {
+            data: {
+              dietId: id,
+              trainerEmail: localStorage.getItem('userEmail')
+            }
+          });
+          setDiets((prevDiets) => prevDiets.filter((diet) => diet.dietId !== id));
         } catch (error) {
           console.error('Error deleting data:', error);
         }
-        setDiets((prevDiets) => prevDiets.filter((diet) => diet.dietId !== id));
+        
       };
-
+      
     const handleAddDietClicked = () => {
         setShowAddDietModal(true);
     };

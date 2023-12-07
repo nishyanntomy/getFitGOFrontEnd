@@ -68,6 +68,7 @@ const TrainerClientDetails = () => {
             });
         } catch (err) {
             console.error('Error assigning diets', err);
+            setError('Error assigning diets');
         }
         setShowAssignDietModal(false);
     };

@@ -15,7 +15,7 @@ const ClientDashboard: React.FC = () => {
   const navigate = useNavigate();
 
   const menuItems = [
-    { label: 'View Routines', image: 'https://hips.hearstapps.com/hmg-prod/images/hardcore-exercises-royalty-free-image-1637943272.jpg?crop=1.00xw:0.737xh;0,0.186xh&resize=1200:*' },
+    { label: 'My Profile', image: 'https://hips.hearstapps.com/hmg-prod/images/hardcore-exercises-royalty-free-image-1637943272.jpg?crop=1.00xw:0.737xh;0,0.186xh&resize=1200:*' },
     { label: 'Search Exercise', image: 'https://kimandkalee.com/wp-content/uploads/2020/01/at-home-LES-MILLS-on-Demand-BODYSTEP-workouts-min.jpg' },
     { label: 'Request Trainer', image: 'https://www.personaltraineredu.org/wp-content/uploads/2022/11/personal-trainer.jpg' },
     { label: 'Workout History', image: 'https://fitbod.me/wp-content/uploads/2023/03/blog_hero.png' },
@@ -63,16 +63,6 @@ const ClientDashboard: React.FC = () => {
         ))}
       </div>
 
-      {/* Render selected page */}
-      <div className="mt-8">
-        {selectedMenuItem.label === 'View Routines' && <Routines />}
-        {selectedMenuItem.label === 'Search Exercise' && <Clients />}
-        {selectedMenuItem.label === 'Request Trainer' && <PendingRequests />}
-        {selectedMenuItem.label === 'View Diets' && <Diets />}
-        {selectedMenuItem.label === 'Workout History' && <WorkoutHistory />}
-        {selectedMenuItem.label === 'Trends' && <Visualization />}
-
-      </div>
     </div>
   );
 };

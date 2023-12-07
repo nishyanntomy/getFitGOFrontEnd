@@ -16,6 +16,8 @@ import Clients from './pages/Clients';
 import TrainerClientDetails from './pages/TrainerClientDetails';
 import ClientViewDiets from './pages/ClientViewDiets';
 import ViewTrainers from './pages/ViewTrainers';
+import ViewExercises from './pages/ViewExercises';
+import ClientProfile from './pages/ClientProfile';
 
 
 export const PageRoute = () => {
@@ -36,6 +38,8 @@ export const PageRoute = () => {
                 <Route path="/clients" element={<Clients/>} />
                 <Route path="/view-diets" element={<ClientViewDiets/>} />
                 <Route path="/request-trainer" element={<ViewTrainers/>} />
+                <Route path="/search-exercise" element={<ViewExercises/>} />
+                <Route path="/my-profile" element={<ClientProfile/>} />
                 <Route path="/client/:clientEmail" element={<TrainerClientDetails />} />
                 <Route element={<NotFoundPage/>}/>
             </Routes>

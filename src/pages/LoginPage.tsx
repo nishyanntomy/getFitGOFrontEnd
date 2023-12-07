@@ -72,7 +72,7 @@ const LoginPage: React.FC<LoginProps> = () => {
           className="object-cover w-full h-full opacity-100"
         />
       </div>
-      <div className="max-w-md w-full p-6 bg-white rounded-md shadow-md relative z-10">
+      <div className="max-w-md w-full p-6 bg-white opacity-90 rounded-md shadow-md relative z-10">
         <h2 className="text-4xl font-bold text-center mb-6">GETFITGO</h2>
         {errorMessage && (
           <div className="mb-4 text-red-500">
