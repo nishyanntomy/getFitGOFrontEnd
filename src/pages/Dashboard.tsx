@@ -6,7 +6,9 @@ interface DashboardProps {
   userType: any;
 }
 
-const Dashboard: React.FC<DashboardProps> = ({ userType }) => {
+const Dashboard: React.FC<DashboardProps> = () => {
+  const userType = localStorage.getItem('user_type');
+
   console.log(userType)
   return (
     <div className="text-center p-8">

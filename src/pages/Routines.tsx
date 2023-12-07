@@ -14,7 +14,6 @@ export interface Exercise {
   equipment: string;
   id: number;
   description: string;
-  type: string;
 }
 
 export interface RoutineExercise {
@@ -35,6 +34,8 @@ const Routines: React.FC = () => {
   interface Data {
     message: string;
   }
+ 
+
 
   const [trainerEmail, setTrainerEmail] = useState('');
   const [currentRoutineId, setCurrentRoutineId] = useState<number | null>(null);
@@ -153,6 +154,7 @@ const Routines: React.FC = () => {
   };
 
   const handleAddExerciseClick = (routineId: number) => {
+    
     setCurrentRoutineId(routineId); // Set the current routine ID in state
     setShowAddExerciseModal(true);
   };
@@ -164,12 +166,13 @@ const Routines: React.FC = () => {
 
   const handleAddExercisesToRoutine = async (selectedExercises: Exercise[]) => {
     const selectedIds = selectedExercises.map((item) => item.id);
-  
     try {
       const addRoutineToExerciseResponse = await axios.post('http://127.0.0.1:5000/routine-exercise', {
         exercises: selectedIds,
         routineId: currentRoutineId,
       });
+
+
       setNewRoutine((prevRoutine) => ({
         ...prevRoutine,
         exercises: [
@@ -189,9 +192,10 @@ const Routines: React.FC = () => {
     } catch (error) {
       console.error('Error adding exercises to routine:', error);
     }
-  
-    setShowAddExerciseModal(false);
-    setCurrentRoutineId(null);
+
+
+
+    setCurrentRoutineId(null); // Reset the current routine ID after adding exercises
   };
   
 
@@ -212,6 +216,7 @@ const Routines: React.FC = () => {
       {showAddExerciseModal && (
         <AddExerciseModal
           onAddExercises={handleAddExercisesToRoutine}
+
           onCancel={handleCancelAddExercise}
         />
       )}
@@ -234,7 +239,7 @@ const Routines: React.FC = () => {
                 <FaDumbbell className="mr-2" />
                 {exercise.exercise_title} - {exercise.reps} reps
                 <button
-                  className="bg-yellow-500 hover:bg-yellow-700 text-white font-bold py-1 px-2 rounded ml-4 flex items-center"
+                  className="bg-yellow-500 hover:bg-yellow-700 text-white font-bold py-2 px-4 rounded ml-4"
                   onClick={() => handleEditRepsClick(routine.routine_id, exercise.exercise_id)}
                 >
                   <FaPencilAlt className="mr-1" />
