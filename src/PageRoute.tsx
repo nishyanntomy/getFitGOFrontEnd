@@ -9,6 +9,7 @@ import ExercisePage from './pages/Visualization';
 import React from 'react';
 import PendingRequests from './pages/PendingRequests';
 
+
 export const PageRoute = () => {
     return (
         <Router>
@@ -16,11 +17,10 @@ export const PageRoute = () => {
                 <Route path="/" element={<Landing/>} />
                 <Route path="/login" element={<LoginPage/>} />
                 <Route path="/register" element={<Register/>} />
-                <Route path="/dashboard" element={<Dashboard userType='trainer'/>} />
+                <Route path="/dashboard" element={<Dashboard userType={localStorage.getItem('user_type')}/>} />
                 <Route path="/routines" element={<Routines/>} />
                 <Route path="/top-exercise" element={<ExercisePage/>} />
                 <Route path="/pending-client-requests" element={<PendingRequests/>} />
-
                 <Route element={<NotFoundPage/>}/>
             </Routes>
         </Router>

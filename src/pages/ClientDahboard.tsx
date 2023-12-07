@@ -1,5 +1,6 @@
 import React from "react";
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 
 // Components for each menu item
 const Routines: React.FC = () => <div>Routines Page</div>;
@@ -8,10 +9,19 @@ const PendingRequests: React.FC = () => <div>Pending Client Requests Page</div>;
 const Diets: React.FC = () => <div>Diets Page</div>;
 
 const ClientDashboard: React.FC = () => {
+  const navigate = useNavigate();
+
+  const menuItems = ['View Routines','Search Exercise', 'Request Trainer','Add Workout Activity', 'View Diets'];
+
     const [selectedMenuItem, setSelectedMenuItem] = useState('Routines');
   
     const handleMenuItemClick = (menuItem: string) => {
+
       setSelectedMenuItem(menuItem);
+      if (menuItem==='View Routines'){
+      navigate('/routines');
+      };
+
     };
   
     return (
@@ -20,7 +30,7 @@ const ClientDashboard: React.FC = () => {
   
         {/* Horizontal menu with larger buttons */}
         <div className="flex justify-center mt-8">
-          {['Routines', 'Clients', 'Pending Client Requests', 'Diets'].map((menuItem, index) => (
+          {menuItems.map((menuItem, index) => (
             <button
               key={index}
               className={`${
@@ -30,11 +40,11 @@ const ClientDashboard: React.FC = () => {
               }`}
               onClick={() => handleMenuItemClick(menuItem)}
             >
-              <img
+              {/* <img
                 src={`path-to-${menuItem.toLowerCase().replace(/\s+/g, '-')}-image.png`}
                 alt={menuItem}
                 className="w-8 h-8 mr-2"
-              />
+              /> */}
               {menuItem}
             </button>
           ))}
@@ -42,14 +52,13 @@ const ClientDashboard: React.FC = () => {
   
         {/* Render selected page */}
         <div className="mt-8">
-          {selectedMenuItem === 'Routines' && <Routines />}
+          {selectedMenuItem === 'View Routines' && <Routines />}
           {selectedMenuItem === 'Clients' && <Clients />}
           {selectedMenuItem === 'Pending Client Requests' && <PendingRequests />}
-          {selectedMenuItem === 'Diets' && <Diets />}
+          {selectedMenuItem === 'View Diets' && <Diets />}
         </div>
       </div>
     );
   };
-
   export default ClientDashboard;
   
