@@ -23,7 +23,7 @@ export const PageRoute = () => {
                 <Route path="/dashboard" element={<Dashboard userType={localStorage.getItem('user_type')}/>} />
                 <Route path="/routines" element={<Routines/>} />
                 <Route path="/top-exercise" element={<ExercisePage/>} />
-                <Route path="/client" element={<ClientDetails/>} />
+                <Route path="/profile" element={<ClientDetails/>} />
                 <Route path="/workout-history" element={<WorkoutHistory/>} />
                 <Route path="/pending-client-requests" element={<PendingRequests/>} />
                 <Route path="/diets" element={<Diets/>} />

@@ -8,7 +8,6 @@ interface TrainerRegisterProps {}
 
 const TrainerRegister: React.FC<TrainerRegisterProps> = () => {
   const navigate = useNavigate();
-  const dispatch = useDispatch();
 
   const [trainerData, setTrainerData] = useState({
     username: '',
