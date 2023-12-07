@@ -5,6 +5,10 @@ import Landing from './pages/Landing';
 import Register from './pages/Register';
 import Dashboard from './pages/Dashboard';
 import Routines from './pages/Routines';
+import ExercisePage from './pages/Visualization';
+import React from 'react';
+import PendingRequests from './pages/PendingRequests';
+
 
 export const PageRoute = () => {
     return (
@@ -15,6 +19,8 @@ export const PageRoute = () => {
                 <Route path="/register" element={<Register/>} />
                 <Route path="/dashboard" element={<Dashboard userType={localStorage.getItem('user_type')}/>} />
                 <Route path="/routines" element={<Routines/>} />
+                <Route path="/top-exercise" element={<ExercisePage/>} />
+                <Route path="/pending-client-requests" element={<PendingRequests/>} />
                 <Route element={<NotFoundPage/>}/>
             </Routes>
         </Router>
