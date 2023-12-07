@@ -1,0 +1,51 @@
+import axios from 'axios';
+import React, { useState, useEffect } from 'react';
+import AddRoutineModal from './routines/AddRoutineModal';
+import AddExerciseModal from './routines/AddExerciseModal';
+
+export interface Exercise {
+  name: string;
+  reps: number;
+  body_part: string;
+  level: string;
+  equipment: string;
+  id: number
+}
+
+interface Routine {
+  routine_id: number;
+  routine_name: string;
+  routine_description: string;
+  exercises: Exercise[];
+}
+
+
+const Routines: React.FC = () => {
+  interface Data {
+    message: string;
+  }
+
+
+  const [clientEmail, setClientEmail] = useState('');
+
+  useEffect(() => {
+    const storedData = localStorage.getItem('userEmail');
+    if (storedData) {
+      setClientEmail(storedData);
+    }
+  }, []);
+
+  const [routines, setRoutines] = useState<Routine[]>([]);
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const response = await axios.get<Routine[]>(`http://127.0.0.1:5000/routine?trainerEmail=${localStorage.getItem('userEmail')}`);
+        setRoutines(response.data)
+        console.log(response.data);
+      } catch (error) {
+        console.error('Error fetching data:', error);
+      }
+    };
+
+    fetchData();
+  }, []);
