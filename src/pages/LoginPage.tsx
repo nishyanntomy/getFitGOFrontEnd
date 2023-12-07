@@ -64,9 +64,16 @@ const LoginPage: React.FC<LoginProps> = () => {
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gray-50">
-      <div className="max-w-md w-full p-6 bg-white rounded-md shadow-md">
-        <h2 className="text-2xl font-semibold mb-6">Login</h2>
+    <div className="min-h-screen relative flex items-center justify-center">
+      <div className="absolute top-0 left-0 w-full h-full bg-cover bg-no-repeat bg-fixed z-0" style={{ backgroundColor: 'rgba(255, 255, 255, 0.8)' }}>
+        <img
+          src="https://wallpapers.com/images/featured/barbell-am7v48yepmncv6c6.jpg"
+          alt="Background"
+          className="object-cover w-full h-full opacity-100"
+        />
+      </div>
+      <div className="max-w-md w-full p-6 bg-white rounded-md shadow-md relative z-10">
+        <h2 className="text-4xl font-bold text-center mb-6">GETFITGO</h2>
         {errorMessage && (
           <div className="mb-4 text-red-500">
             <p>{errorMessage}</p>
@@ -113,6 +120,5 @@ const LoginPage: React.FC<LoginProps> = () => {
       </div>
     </div>
   );
-};
-
+        };  
 export default LoginPage;
