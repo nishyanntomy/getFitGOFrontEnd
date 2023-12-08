@@ -90,6 +90,7 @@ const DietPage: React.FC = () => {
                 { ...emptyDiet, dietType: newDiet.dietType, breakfast: newDiet.breakfast, lunch: newDiet.lunch, dinner: newDiet.dinner, instruction: newDiet.instruction },
             ]);
             setShowAddDietModal(false);
+            window.location.reload();
         } catch (error) {
             console.error('Error adding routine:', error);
         }

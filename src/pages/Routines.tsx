@@ -4,6 +4,7 @@ import AddRoutineModal from './routines/AddRoutineModal';
 import AddExerciseModal from './routines/AddExerciseModal';
 import EditRepsModal from './routines/EditRepsModal';
 import { FaPlus, FaPencilAlt, FaDumbbell, FaTrash } from 'react-icons/fa';
+import { useNavigate } from 'react-router-dom';
 
 
 export interface Exercise {
@@ -47,7 +48,7 @@ const Routines: React.FC = () => {
     }
   }, []);
 
-
+const navigate = useNavigate();
   const [routines, setRoutines] = useState<Routine[]>([]);
   const [newRoutine, setNewRoutine] = useState<Routine>({
     routine_id: 0,
@@ -169,26 +170,11 @@ const Routines: React.FC = () => {
     try {
       const addRoutineToExerciseResponse = await axios.post('http://127.0.0.1:5000/routine-exercise', {
         exercises: selectedIds,
-        routineId: currentRoutineId,
+        routineId: currentRoutineId
       });
-
-
-      setNewRoutine((prevRoutine) => ({
-        ...prevRoutine,
-        exercises: [
-          ...prevRoutine.exercises,
-          ...newExercise,
-          ...selectedExercises.map((selectedExercise) => ({
-            exercise_id: selectedExercise.id,
-            exercise_title: selectedExercise.name,
-            reps: selectedExercise.reps,
-            exercise_description: selectedExercise.description,
-            // Add other properties from Exercise if needed
-          })),
-        ],
-      }));
-      // Additional operations dependent on the updated state
-      setShowAddRoutineModal(false);
+      setShowAddExerciseModal(false);
+      navigate('/routines');
+      window.location.reload();
     } catch (error) {
       console.error('Error adding exercises to routine:', error);
     }

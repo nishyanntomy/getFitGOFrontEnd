@@ -62,6 +62,7 @@ const LoginPage: React.FC<LoginProps> = () => {
   const handleGoBack = () => {
     navigate('/');
   };
+ 
 
   return (
     <div className="min-h-screen relative flex items-center justify-center">
